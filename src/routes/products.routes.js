@@ -17,10 +17,6 @@ router.get('/', async (req,res)=>{
           message: 'Internal server error',
         });
       }
-
-
-
-
 })
 
 router.get('/:pid', async (req,res)=>{

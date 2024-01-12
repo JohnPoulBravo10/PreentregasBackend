@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ProductManagerDB } from '../dao/managers/ProductsManagerDB.js';
-import { CartManagerDB } from '../dao/managers/cartManagerDB.js';
+
 
 const router = new Router();
 
@@ -14,6 +14,11 @@ router.get('/', async (req, res) => {
 
         const products = await productsManager.getProducts(page, limit);
 
+        
+        const isAdmin = req.session.user && req.session.user.isAdmin || false;
+       
+        const userName = req.session.user ? req.session.user.full_name : null;
+
         res.render('products', {
             products: products.docs,
             totalPages: products.totalPages,
@@ -21,7 +26,9 @@ router.get('/', async (req, res) => {
             nextPage: products.nextPage,
             page: products.page,
             hasPrevPage: products.hasPrevPage,
-            hasNextPage: products.hasNextPage
+            hasNextPage: products.hasNextPage,
+            isAdmin: isAdmin,
+            userName: userName
         });
     } catch (error) {
         res.status(500).send('Internal Server Error');
@@ -58,5 +65,5 @@ router.post('/add-to-cart', async (req, res) => {
 
 
 
-module.exports = router;
+export {router as routerview};
 
