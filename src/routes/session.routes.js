@@ -5,7 +5,7 @@ import passport from "passport";
 
 const router = Router();
 
-router.post("/register",passport.authenticate("register", {failureRedirect:"/api/sessions/failregister"}),
+router.post("/register",passport.authenticate("register", {failureRedirect:"/api/session/failregister"}),
 async (req,res) => {
     res.send({status:"success", message:"User registrado"})
 })

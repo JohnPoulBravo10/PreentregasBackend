@@ -24,7 +24,7 @@ router.get('/login', publicAccess, (req,res)=>{
 router.get('/',privateAccess, (req,res)=>{
     res.render('profile', {user:req.session.user})
 })
-router.get("/resetPassword", (req,res)=>{
+router.get("/restartPassword", (req,res)=>{
     res.render("resetPassword");
 })
 export {router as viewRoutes};

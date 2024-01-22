@@ -9,6 +9,8 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import { sessionRouter } from './routes/session.routes.js';
 import { viewRoutes } from './routes/viewroutes.routes.js';
+import passport from "passport";
+import inicializePassport from "./config/passport.config.js";
 
 const PORT = 8080;
 const MONGO = 'mongodb+srv://juanpablobravo0209:42765715JpB10@cluster0.h1cvx6d.mongodb.net/CoderBackend'
@@ -40,6 +42,9 @@ app.use("/api/carts", cartRouter);
 app.use("/products", routerview);
 app.use("/api/session", sessionRouter);
 app.use("/", viewRoutes );
+inicializePassport()
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.listen(PORT, ()=>{
     console.log(`Servidor funcionando en el puerto: ${PORT}`);
