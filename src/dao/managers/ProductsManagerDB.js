@@ -21,7 +21,7 @@ class ProductManagerDB{
               };
             }
       
-            const result = await Product.paginate(filter, options);
+            const result = await productsModel.paginate(filter, options);
       
             return {
               status: 'success',
@@ -42,16 +42,55 @@ class ProductManagerDB{
             };
           }
     }
-    createProduct = async (product) =>{
 
-    }
+    createProduct = async (productData) => {
+      try {
+        const newProduct = await productsModel.create(productData);
+  
+        return {
+          status: 'success',
+          payload: newProduct,
+          message: 'Product created successfully',
+        };
+      } catch (error) {
+        return {
+          status: 'error',
+          message: 'Failed to create product',
+        };
+      }
+    };
+    
     getProductsById = async (pid) => {
-        const product = await productsModel.findOne({_id_id});
+        const product = await productsModel.findOne({_id:pid});
         return {
             status: "success",
             msg: product
         }
     }
+
+    updateProductById = async (pid, updatedProductData) => {
+      try {
+          const updatedProduct = await productsModel.findOneAndUpdate(
+              { _id: pid },
+              updatedProductData,
+              { new: true } 
+          );
+
+          return updatedProduct;
+      } catch (error) {
+          throw new Error('Failed to update product');
+      }
+  }
+
+  deleteProductById = async (pid) => {
+    try {
+        const deletedProduct = await productsModel.findOneAndDelete({ _id: pid });
+
+        return deletedProduct;
+    } catch (error) {
+        throw new Error('Failed to delete product');
+    }
+}
 
 }
 export {ProductManagerDB}

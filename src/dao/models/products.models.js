@@ -30,7 +30,7 @@ const productSchema =  new mongoose.Schema({
 
         type: String,   
 
-        require: true
+        require: false
 
     },
 

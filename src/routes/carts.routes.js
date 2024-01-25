@@ -14,7 +14,7 @@ router.get('/', async (req,res)=>{
         carritos: carts
     })
 })
-router.get('/carts/:cid', async (req, res) => {
+router.get('/:cid', async (req, res) => {
     try {
         const cartId = req.params.cid;
         const cart = await cartManagerMongo.getCartPopulate(cartId);
@@ -23,7 +23,7 @@ router.get('/carts/:cid', async (req, res) => {
             return res.status(404).send('Carrito no encontrado');
         }
 
-        res.render('cart-details', { cart });
+        res.json(cart)
     } catch (error) {
         res.status(500).send('Internal Server Error');
     }
@@ -45,7 +45,10 @@ router.get('/:cid', async (req,res)=>{
       }
 })
 router.post('/', async (req,res)=>{ 
-    const cart = await cartManagerMongo.createCart()
+  const carrito = {
+    produts: []
+  };
+    const cart = await cartManagerMongo.createCart(carrito)
     res.send({
         status:"succes",
         msg: cart
@@ -56,7 +59,7 @@ router.post('/:cid/product/:pid', async (req,res)=>{
     const pid = req.params.pid;
     const quantity = req.body.quantity
     
-    const cart = await cartManagerMongo.addProductInCart(pid,cid,quantity)
+    const cart = await cartManagerMongo.addProductInCart(cid,pid,quantity)
 
     res.send({
         status:"succes",

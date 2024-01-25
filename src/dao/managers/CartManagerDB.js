@@ -14,8 +14,8 @@ class CartManagerDB{
         })
         return cart;
     }
-    createCart = async () =>{
-        const cart = await cartsModel.create()
+    createCart = async (carrito) =>{
+        const cart = await cartsModel.create(carrito)
         return cart
     }
     addProductInCart = async (cid, pid, quantity = 1) => {
@@ -33,18 +33,18 @@ class CartManagerDB{
                 msg: `El producto con el id ${pid} no existe`
             } 
         };
-        let productsInCart = cart.product;
+        let productsInCart = cart.products;
         
-        const indexProduct = productsInCart.findIndex((product)=> product.product == pid );
+        const indexProduct = productsInCart.findIndex((product)=> product.id == pid );
 
         if(indexProduct == -1){
             const newProduct = {
                 product: pid,
                 quantity: quantity
             }
-            cart.product.push(newProduct);
+            cart.products.push(newProduct);
         }else{
-            cart.product[indexProduct].quantity += quantity;
+            cart.products[indexProduct].quantity += quantity;
         }
            
         await cart.save();
@@ -60,7 +60,7 @@ class CartManagerDB{
           }
     
           
-          cart.product = [];
+          cart.products = [];
           await cart.save();
     
           return { status: 'success', message: 'Todos los productos eliminados del carrito correctamente' };
@@ -77,7 +77,8 @@ class CartManagerDB{
           }
     
           
-          cart.product.pull(productId);
+          cart.products = cart.products.filter(item => item.product.toString() !== productId);
+
           await cart.save();
     
           return { status: 'success', message: 'Producto eliminado del carrito correctamente' };
@@ -93,7 +94,7 @@ class CartManagerDB{
           }
     
           
-          cart.product = newProducts;
+          cart.products = newProducts;
           await cart.save();
     
           return { status: 'success', message: 'Carrito actualizado correctamente' };
@@ -110,10 +111,10 @@ class CartManagerDB{
           }
     
           
-          const productIndex = cart.product.findIndex(product => product._id.equals(productId));
+          const productIndex = cart.products.findIndex(product => product.product.equals(productId));
     
           if (productIndex !== -1) {
-            cart.product[productIndex].quantity = newQuantity;
+            cart.products[productIndex].quantity = newQuantity;
             await cart.save();
     
             return { status: 'success', message: 'Cantidad del producto actualizada correctamente' };
