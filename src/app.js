@@ -11,6 +11,7 @@ import { sessionRouter } from './routes/session.routes.js';
 import { viewRoutes } from './routes/viewroutes.routes.js';
 import passport from "passport";
 import inicializePassport from "./config/passport.config.js";
+import { options } from './config/config.js';
 
 const PORT = 8080;
 const MONGO = 'mongodb+srv://juanpablobravo0209:42765715JpB10@cluster0.h1cvx6d.mongodb.net/CoderBackend'
