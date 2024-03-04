@@ -4,9 +4,9 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 const MONGO = process.env.MONGO;
-const CLIENTID = process.env.client.clientID;
-const CLIENTSECRET = process.env.client.clientSecret
-const CALLBACKURL = process.env.client.callbackURL
+const CLIENTID = process.env.CLIENTID;
+const CLIENTSECRET = process.env.CLIENTSECRET;
+const CALLBACKURL = process.env.CALLBACKURL;
 
 export const options = {
     server: {

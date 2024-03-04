@@ -6,12 +6,12 @@ import { cartRouter } from './routes/carts.routes.js';
 import { productRouter } from './routes/products.routes.js';
 import { routerview } from "./routes/routerview.routes.js"
 import session from "express-session";
-import MongoStore from "connect-mongo";
 import { sessionRouter } from './routes/session.routes.js';
 import { viewRoutes } from './routes/viewroutes.routes.js';
 import passport from "passport";
 import inicializePassport from "./config/passport.config.js";
 import { options } from './config/config.js';
+import MongoStore from "connect-mongo";
 
 const PORT = options.server.port;
 const MONGO = options.mongo.url;
